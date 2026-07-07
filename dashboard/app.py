@@ -202,7 +202,7 @@ if data_loaded:
                 xaxis=dict(showgrid=True, gridcolor='#334155'),
                 yaxis=dict(showgrid=True, gridcolor='#334155')
             )
-            st.plotly_chart(fig_trend, use_container_width=True)
+            st.plotly_chart(fig_trend, width='stretch')
             
         with row1_col2:
             st.subheader("🏷️ Fraud Categories")
@@ -220,7 +220,7 @@ if data_loaded:
                 paper_bgcolor='rgba(0,0,0,0)',
                 font_color='#94a3b8'
             )
-            st.plotly_chart(fig_pie, use_container_width=True)
+            st.plotly_chart(fig_pie, width='stretch')
             
         # Charts Row 2: Heatmap and Merchant Analysis
         row2_col1, row2_col2 = st.columns([1, 1])
@@ -230,7 +230,7 @@ if data_loaded:
             # Draw scatter plot representing geographical coordinates of fraud
             high_risk_df = df_tx[df_tx['risk_score'] >= 60].sample(min(len(df_tx[df_tx['risk_score'] >= 60]), 1500))
             
-            fig_map = px.scatter_mapbox(
+            fig_map = px.scatter_map(
                 high_risk_df,
                 lat="tx_lat",
                 lon="tx_lon",
@@ -239,7 +239,7 @@ if data_loaded:
                 color_continuous_scale=px.colors.sequential.OrRd,
                 size_max=15,
                 zoom=3.5,
-                mapbox_style="carto-darkmatter",
+                map_style="carto-darkmatter",
                 title="Geographic Scatter of High Risk Transactions",
                 labels={'risk_score': 'Risk Score (0-100)', 'amount': 'Tx Amount ($)'}
             )
@@ -248,7 +248,7 @@ if data_loaded:
                 paper_bgcolor='rgba(0,0,0,0)',
                 font_color='#94a3b8'
             )
-            st.plotly_chart(fig_map, use_container_width=True)
+            st.plotly_chart(fig_map, width='stretch')
             
         with row2_col2:
             st.subheader("🛍️ Merchant Category Vulnerability")
@@ -275,7 +275,7 @@ if data_loaded:
                 xaxis=dict(showgrid=False),
                 yaxis=dict(showgrid=True, gridcolor='#334155')
             )
-            st.plotly_chart(fig_bar, use_container_width=True)
+            st.plotly_chart(fig_bar, width='stretch')
 
     # ------------------
     # MENU 2: CUSTOMER RISK EXPLORER
@@ -348,14 +348,14 @@ if data_loaded:
                 xaxis=dict(showgrid=True, gridcolor='#334155'),
                 yaxis=dict(showgrid=True, gridcolor='#334155')
             )
-            st.plotly_chart(fig_cust_hist, use_container_width=True)
+            st.plotly_chart(fig_cust_hist, width='stretch')
             
             # Show transaction logs
             st.subheader("Detailed Transaction Log")
             st.dataframe(
                 cust_txs[['transaction_id', 'timestamp', 'merch_name', 'amount', 'channel', 'is_fraud', 'risk_score']]
                 .rename(columns={'merch_name': 'Merchant', 'amount': 'Amount ($)', 'channel': 'Channel', 'is_fraud': 'Fraud Label', 'risk_score': 'ML Risk Score (%)'}),
-                use_container_width=True
+                width='stretch'
             )
 
     # ------------------
@@ -391,7 +391,7 @@ if data_loaded:
                 xaxis=dict(showgrid=False),
                 yaxis=dict(showgrid=True, gridcolor='#334155')
             )
-            st.plotly_chart(fig_m_bar, use_container_width=True)
+            st.plotly_chart(fig_m_bar, width='stretch')
             
         with m_col2:
             st.subheader("Top 10 Highest Risk Merchant Terminals")
@@ -415,7 +415,7 @@ if data_loaded:
                     'total_fraud_loss': 'Loss ($)',
                     'avg_risk_score': 'Avg Risk Score (%)'
                 }),
-                use_container_width=True,
+                width='stretch',
                 hide_index=True
             )
             
@@ -488,7 +488,7 @@ if data_loaded:
                 'risk_score': 'Risk Score (%)',
                 'notes': 'Trigger Reasons'
             }),
-            use_container_width=True,
+            width='stretch',
             hide_index=True
         )
         
