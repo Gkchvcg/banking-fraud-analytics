@@ -4,6 +4,8 @@ import sqlite3
 import plotly.express as px
 import plotly.graph_objects as go
 import os
+import sys
+import subprocess
 from datetime import datetime
 
 # Page configuration
@@ -91,6 +93,18 @@ def load_dashboard_data():
     
     conn.close()
     return df_tx, df_alerts
+
+# Check if DB exists, if not, generate it
+if not os.path.exists(DB_PATH):
+    st.warning("Database not found! Running data generation pipeline. This may take 1-2 minutes...")
+    with st.spinner("Training models and generating synthetic data..."):
+        try:
+            run_script_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'run.py')
+            subprocess.run([sys.executable, run_script_path, "--no-dashboard"], check=True)
+            st.success("Database and models generated successfully! Reloading...")
+            st.rerun()
+        except Exception as e:
+            st.error(f"Failed to generate data: {e}")
 
 # Load primary datasets
 try:
