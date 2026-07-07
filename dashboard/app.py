@@ -117,7 +117,7 @@ except Exception as e:
 
 if data_loaded:
     # Sidebar navigation
-    st.sidebar.image("https://img.icons8.com/color/96/shield-with-crown.png", width=80)
+    st.sidebar.markdown("<div style='font-size: 80px; text-align: center;'>🛡️</div>", unsafe_allow_html=True)
     st.sidebar.title("SafeVault Analytics")
     st.sidebar.markdown("*Enterprise Fraud Intelligence*")
     st.sidebar.write("---")
